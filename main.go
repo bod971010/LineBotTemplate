@@ -49,7 +49,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" 成功接受到訊息!!")).Do(); 
+			//	if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" 成功接受到訊息!!")).Do(); 
+			//	err != nil {
+			//		log.Print(err)
+			//	}
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); 
 				err != nil {
 					log.Print(err)
 				}
@@ -57,3 +61,4 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+
