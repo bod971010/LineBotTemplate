@@ -1,15 +1,3 @@
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package main
 
 import (
@@ -17,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -31,8 +18,11 @@ func main() {
 	port := os.Getenv("PORT")
 	addr := fmt.Sprintf(":%s", port)
 	http.ListenAndServe(addr, nil)
+
+	
 }
 
+//回復程序者
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
 
@@ -44,21 +34,29 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-
+	//	if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" 成功接受到訊息!!")).Do(); 
+	//	err != nil {
+	//		log.Print(err)
+	//	}
+//-------------回復訊息 example--------------
+//	bot, err := linebot.New(<channel secret>, <channel token>)
+//  if err != nil {
+//  ...
+//  }
+//  if _, err := bot.ReplyMessage(<replyToken>, linebot.NewTextMessage("hello")).Do(); err != nil {
+// ...
+//  }
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-			//	if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" 成功接受到訊息!!")).Do(); 
-			//	err != nil {
-			//		log.Print(err)
-			//	}
+			
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); 
 				err != nil {
 					log.Print(err)
 				}
+				
 			}
 		}
 	}
 }
-
