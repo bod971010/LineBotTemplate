@@ -29,7 +29,7 @@ func callbackHandlerExample(w http.ResponseWriter, r *http.Request) {
   if err != nil {
  
   }
-  if _, err := bot.ReplyMessage(<replyToken>, linebot.NewTextMessage("hello")).Do(); 
+  if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("hello")).Do(); 
 	err != nil {
  
   }
