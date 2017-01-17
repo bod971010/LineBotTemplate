@@ -15,20 +15,29 @@ func main() {
 	bot, err = linebot.New(os.Getenv("ChannelSecret"), os.Getenv("ChannelAccessToken"))
 	log.Println("Bot:", bot, " err:", err)
 	http.HandleFunc("/callback", callbackHandler)
+	http.HandleFunc("/callback", callbackHandlerExample)
 	port := os.Getenv("PORT")
 	addr := fmt.Sprintf(":%s", port)
 	http.ListenAndServe(addr, nil)
+	
+}
 
-  events, err := bot.ParseRequest(r)
-	if err != nil {
-    
+func callbackHandlerExample(w http.ResponseWriter, r *http.Request) {
+	events, err := bot.ParseRequest(r)
+
+
+  if err != nil {
+ 
   }
-  if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("hello")).Do(); 
+  if _, err := bot.ReplyMessage(<replyToken>, linebot.NewTextMessage("hello")).Do(); 
 	err != nil {
-    
+ 
   }
 	
 }
+
+
+
 
 //回復程序者
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
