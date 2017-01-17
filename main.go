@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -18,10 +19,8 @@ func main() {
 	port := os.Getenv("PORT")
 	addr := fmt.Sprintf(":%s", port)
 	http.ListenAndServe(addr, nil)
-	
 }
 
-//回復程序者
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
 
@@ -33,62 +32,33 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-//-------------回復訊息 example--------------
-//	bot, err := linebot.New(<channel secret>, <channel token>)
-//  if err != nil {
-//  ...
-//  }
-//  if _, err := bot.ReplyMessage(<replyToken>, linebot.NewTextMessage("hello")).Do(); err != nil {
-// ...
-//  }
+
 	for _, event := range events {
-		if event.Type == linebot.EventTypeMessage {
-			switch message := event.Message.(type) {
-			case *linebot.TextMessage:
-			
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("哈囉!!")).Do(); 
-				err != nil {
-					log.Print(err)
+		replyToken := event.ReplyToken
+		switch event.Type {
+			case linebot.EventTypeMessage:
+				switch message := event.Message.(type) {
+					case *linebot.TextMessage:
+						profile, getProfileErr := bot.GetProfile(event.Source.UserID).Do()
+				if getProfileErr != nil {
+					bot.ReplyMessage(replyToken, linebot.NewTextMessage(getProfileErr.Error()))
+					log.Println(getProfileErr)
 				}
-				
-			}
+
+				cmd := strings.Fields(message.Text)
+
+				switch cmd[0] {
+					case "加入":
+					
+						text := profile.DisplayName + " 您好，已將您加入傳送對象，未來將會傳送天氣警報資訊給您 ^＿^ "
+						if _, replyErr := bot.ReplyMessage(
+							replyToken,
+							linebot.NewTextMessage(text)).Do(); replyErr != nil {
+							log.Println(replyErr)
+						}
+					}
+				}
+			}				
 		}
 	}
 }
-
-//原程式碼
-/*
-func callbackHandler(w http.ResponseWriter, r *http.Request) {
-	events, err := bot.ParseRequest(r)
-
-	if err != nil {
-		if err == linebot.ErrInvalidSignature {
-			w.WriteHeader(400)
-		} else {
-			w.WriteHeader(500)
-		}
-		return
-	}
-//-------------回復訊息 example--------------
-//	bot, err := linebot.New(<channel secret>, <channel token>)
-//  if err != nil {
-//  ...
-//  }
-//  if _, err := bot.ReplyMessage(<replyToken>, linebot.NewTextMessage("hello")).Do(); err != nil {
-// ...
-//  }
-	for _, event := range events {
-		if event.Type == linebot.EventTypeMessage {
-			switch message := event.Message.(type) {
-			case *linebot.TextMessage:
-			
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); 
-				err != nil {
-					log.Print(err)
-				}
-				
-			}
-		}
-	}
-}
-*/
