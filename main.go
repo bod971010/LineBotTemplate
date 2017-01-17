@@ -14,7 +14,7 @@ func main() {
 	var err error
 	bot, err = linebot.New(os.Getenv("ChannelSecret"), os.Getenv("ChannelAccessToken"))
 	log.Println("Bot:", bot, " err:", err)
-	http.HandleFunc("/callback", callbackHandler)
+//	http.HandleFunc("/callback", callbackHandler)
 	http.HandleFunc("/callback", callbackHandlerExample)
 	port := os.Getenv("PORT")
 	addr := fmt.Sprintf(":%s", port)
@@ -38,7 +38,7 @@ func callbackHandlerExample(w http.ResponseWriter, r *http.Request) {
 
 
 
-
+/*
 //回復程序者
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
@@ -76,4 +76,5 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+	*/
 }
