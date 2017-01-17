@@ -33,12 +33,20 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	
+//-------------回復訊息 example--------------
+//	bot, err := linebot.New(<channel secret>, <channel token>)
+//  if err != nil {
+//  ...
+//  }
+//  if _, err := bot.ReplyMessage(<replyToken>, linebot.NewTextMessage("hello")).Do(); err != nil {
+// ...
+//  }
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("嗨囉!!")).Do(); 
+			
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("哈囉!!")).Do(); 
 				err != nil {
 					log.Print(err)
 				}
