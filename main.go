@@ -37,8 +37,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
-			case "1":
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("你輸入1")).Do(); 
+			case *linebot.TextMessage:
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("嗨囉!!")).Do(); 
 				err != nil {
 					log.Print(err)
 				}
