@@ -21,7 +21,6 @@ func main() {
 	
 }
 
-
 //回復程序者
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
@@ -34,11 +33,18 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	//for _, event := range events {
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Hello!!")).Do(); 
+	
+	for _, event := range events {
+		if event.Type == linebot.EventTypeMessage {
+			switch message := event.Message.(type) {
+			case "1":
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("你輸入1")).Do(); 
 				err != nil {
 					log.Print(err)
-		//		}
+				}
+				
+			}
+		}
 	}
 }
 
