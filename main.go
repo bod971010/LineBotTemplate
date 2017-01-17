@@ -14,31 +14,14 @@ func main() {
 	var err error
 	bot, err = linebot.New(os.Getenv("ChannelSecret"), os.Getenv("ChannelAccessToken"))
 	log.Println("Bot:", bot, " err:", err)
-//	http.HandleFunc("/callback", callbackHandler)
-	http.HandleFunc("/callback", callbackHandlerExample)
+	http.HandleFunc("/callback", callbackHandler)
 	port := os.Getenv("PORT")
 	addr := fmt.Sprintf(":%s", port)
 	http.ListenAndServe(addr, nil)
 	
 }
 
-func callbackHandlerExample(w http.ResponseWriter, r *http.Request) {
-	events, err := bot.ParseRequest(r)
 
-
-  if err != nil {
- 
-  }
-  if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("hello")).Do(); 
-	err != nil {
- 
-  }
-	
-}
-
-
-
-/*
 //回復程序者
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
@@ -51,10 +34,35 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	//	if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" 成功接受到訊息!!")).Do(); 
-	//	err != nil {
-	//		log.Print(err)
-	//	}
+//-------------回復訊息 example--------------
+//	bot, err := linebot.New(<channel secret>, <channel token>)
+//  if err != nil {
+//  ...
+//  }
+//  if _, err := bot.ReplyMessage(<replyToken>, linebot.NewTextMessage("hello")).Do(); err != nil {
+// ...
+//  }
+	for _, event := range events {
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Hello!!")).Do(); 
+				err != nil {
+					log.Print(err)
+				}
+	}
+}
+
+//原程式碼
+/*
+func callbackHandler(w http.ResponseWriter, r *http.Request) {
+	events, err := bot.ParseRequest(r)
+
+	if err != nil {
+		if err == linebot.ErrInvalidSignature {
+			w.WriteHeader(400)
+		} else {
+			w.WriteHeader(500)
+		}
+		return
+	}
 //-------------回復訊息 example--------------
 //	bot, err := linebot.New(<channel secret>, <channel token>)
 //  if err != nil {
@@ -76,4 +84,5 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
-}*/
+}
+*/
