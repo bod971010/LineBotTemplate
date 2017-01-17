@@ -34,19 +34,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-//-------------回復訊息 example--------------
-//	bot, err := linebot.New(<channel secret>, <channel token>)
-//  if err != nil {
-//  ...
-//  }
-//  if _, err := bot.ReplyMessage(<replyToken>, linebot.NewTextMessage("hello")).Do(); err != nil {
-// ...
-//  }
-	for _, event := range events {
+	//for _, event := range events {
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Hello!!")).Do(); 
 				err != nil {
 					log.Print(err)
-				}
+		//		}
 	}
 }
 
