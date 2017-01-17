@@ -49,9 +49,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				cmd := strings.Fields(message.Text)
 
 				switch cmd[0] {
-					case "加入":
+					case "你好":
 					
-						text := profile.DisplayName + " 您好，已將您加入傳送對象，未來將會傳送天氣警報資訊給您 ^＿^ "
+						text := profile.DisplayName + " 您好，我是喵喵^＿^ "
 						if _, replyErr := bot.ReplyMessage(
 							replyToken,
 							linebot.NewTextMessage(text)).Do(); replyErr != nil {
