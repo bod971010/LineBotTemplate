@@ -19,6 +19,7 @@ func main() {
 	addr := fmt.Sprintf(":%s", port)
 	http.ListenAndServe(addr, nil)
 
+  events, err := bot.ParseRequest(r)
 	if err != nil {
     
   }
