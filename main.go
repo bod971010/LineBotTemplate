@@ -19,6 +19,13 @@ func main() {
 	addr := fmt.Sprintf(":%s", port)
 	http.ListenAndServe(addr, nil)
 
+	if err != nil {
+    
+  }
+  if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("hello")).Do(); 
+	err != nil {
+    
+  }
 	
 }
 
