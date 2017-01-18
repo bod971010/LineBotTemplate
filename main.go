@@ -40,7 +40,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			case linebot.EventTypeMessage:
 				switch message := event.Message.(type) {
 					case *linebot.TextMessage:
-						profile, getProfileErr := bot.GetProfile(event.Source.UserID).Do()
+						profile, getProfileErr := bot.GetProfile(event.Source.GroupID).Do()
 				if getProfileErr != nil {
 					bot.ReplyMessage(replyToken, linebot.NewTextMessage(getProfileErr.Error()))
 					log.Println(getProfileErr)
